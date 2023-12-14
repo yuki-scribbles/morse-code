@@ -70,7 +70,7 @@ def userMorse():
 def fileConverter():
     txt = ''
     #read file content
-    with open('message.txt') as file:
+    with open('./ogMessage.txt') as file:
         txt = file.read()
     #remove any indents
     txt = txt.replace('\n', ' ')
@@ -80,7 +80,7 @@ def fileConverter():
     return txt
 
 def fileWrite(message):
-    with open('morse.txt', 'w') as file:
+    with open('./morseMessage.txt', 'w') as file:
         file.write(message)
 
 if __name__ == '__main__':
