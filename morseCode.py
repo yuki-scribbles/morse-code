@@ -1,12 +1,16 @@
 import time
 import fileinput
 from pysinewave import SineWave
+import tkinter
 
-# Create a sine wave, with a starting pitch of 7 (note G), and a pitch change speed of 10/second.
-sinewave = SineWave(pitch = 7, pitch_per_second = 10)
-#used to adjust speed
-dotPerSecond = 12
+# Create a sine wave, with a starting pitch of 7 (note G).
+dotPerSecond = 20
 dotSpeed = 1/dotPerSecond
+volume = 10
+sinewave = SineWave(pitch = 7, pitch_per_second = 10, decibels_per_second = 15)
+sinewave.set_volume(volume)
+#used to adjust speed
+
 
 
 # Dictionary representing the morse code chart
@@ -35,7 +39,10 @@ def encrypt(message):
     for letter in message:
         if letter != ' ':
             #finds morse code associated with letter and adds space to have division per character
-            cipher += morseDict[letter] + ' '
+            try:
+                cipher += morseDict[letter] + ' '
+            except:
+                pass
         else:
             #adds additional 2 spaces if it's a word, totalling 3 spaces between words
             cipher += '  '
@@ -48,13 +55,31 @@ def playMorse(message):
     for letter in message:
         #finds what to play
         if letter == '.':
+            # sinewave.play()
+            # sinewave.set_volume(volume)
+            # time.sleep(dotSpeed)
+            # sinewave.set_volume(volume * 0.8)
+            # sinewave.stop()
+            # time.sleep(dotSpeed)
+            sinewave.set_volume(0.5)
             sinewave.play()
-            time.sleep(dotSpeed)
+            sinewave.set_volume(8)
+            time.sleep(dotSpeed/2)
+            sinewave.set_volume(0.5)
+            time.sleep(dotSpeed/2)
             sinewave.stop()
             time.sleep(dotSpeed)
         elif letter == '-':
+            # sinewave.play()
+            # time.sleep(dotSpeed * 3)
+            # sinewave.stop()
+            # time.sleep(dotSpeed)
+            sinewave.set_volume(0.5)
             sinewave.play()
-            time.sleep(dotSpeed * 3)
+            sinewave.set_volume(8)
+            time.sleep(dotSpeed)
+            sinewave.set_volume(0.5)
+            time.sleep(dotSpeed*2)
             sinewave.stop()
             time.sleep(dotSpeed)
         else:
@@ -111,7 +136,7 @@ if __name__ == '__main__':
         
     elif (option == "N"):
         print("No write. Exiting program")
-    
+
 
 
 
